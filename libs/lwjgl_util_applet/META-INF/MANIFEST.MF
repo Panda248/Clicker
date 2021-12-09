@@ -1,0 +1,10 @@
+Manifest-Version: 1.0
+Ant-Version: Apache Ant 1.9.4
+Created-By: 1.7.0_65-b19 (Oracle Corporation)
+Sealed: true
+Trusted-Library: true
+Permissions: all-permissions
+Codebase: *
+Caller-Allowable-Codebase: *
+Application-Library-Allowable-Codebase: *
+
