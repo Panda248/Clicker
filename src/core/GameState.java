@@ -8,11 +8,11 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class Game extends BasicGameState 
+public class GameState extends BasicGameState
 {	
 	private int id;
-
-	public Game(int id) 
+	private StateBasedGame sbg;
+	public GameState(int id)
 	{
 		this.id = id;
 	}
@@ -24,6 +24,7 @@ public class Game extends BasicGameState
 	
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException 
 	{
+		this.sbg = sbg;
 		// This code happens when you enter a game state for the *first time.*
 		gc.setShowFPS(true);
 	}

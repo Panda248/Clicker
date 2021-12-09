@@ -10,16 +10,23 @@ public class Main extends StateBasedGame
 {
 	public final static int FRAMES_PER_SECOND = 60;
 	private static AppGameContainer appgc;
-	
-    public static final int GAME_ID  = 0;
+	public static boolean debug;
+
+	private static final int TITLE_ID = 0;
+	public static final int GAME_ID  = 1;
+	private static final int END_ID = 2;
     
-    private BasicGameState game;  
+    private BasicGameState title;
+	private BasicGameState game;
+	private BasicGameState end;
     
 	public Main(String name) 
 	{
 		super(name);
-		
-		game = new Game(GAME_ID);
+		title = new TitleState(TITLE_ID);
+		game = new GameState(GAME_ID);
+		end = new EndState(END_ID);
+
 	}
 
 	public static int getScreenWidth()
@@ -35,14 +42,18 @@ public class Main extends StateBasedGame
 
 	public void initStatesList(GameContainer gc) throws SlickException 
 	{
+		addState(title);
 		addState(game);
+		addState(end);
+
 	}
 
 	public static void main(String[] args) 
 	{
+		debug = false;
 		try 
 		{
-			appgc = new AppGameContainer(new Main("My First Project"));
+			appgc = new AppGameContainer(new Main("Goose Chase"));
 			System.setProperty("org.lwjgl.opengl.Window.undecorated", "true");
 		
 			appgc.setDisplayMode(appgc.getScreenWidth(), appgc.getScreenHeight(), false);
