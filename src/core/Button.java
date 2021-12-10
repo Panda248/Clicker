@@ -27,6 +27,10 @@ public class Button {
         over = (input.getAbsoluteMouseX() > this.x && input.getAbsoluteMouseX() < this.x + this.width)&&
                 (input.getAbsoluteMouseY() > this.y && input.getAbsoluteMouseY() < this.y + this.height);
     }
+    public boolean clicked()
+    {
+        return over;
+    }
     public void render(Graphics g)
     {
         if(over)
@@ -38,7 +42,9 @@ public class Button {
             g.setColor(color);
         }
         g.fillRect(this.x, this.y, this.width, this.height);
-        g.drawString(this.text, this.x + width/this.text.length(), this.y /3);
+        g.drawRect(this.x, this.y, this.width, this.height);
+        g.setColor(Color.white);
+        g.drawString(this.text, this.x + width*0.4f, this.y + this.height/3);
     }
 
 

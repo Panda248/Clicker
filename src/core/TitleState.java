@@ -29,7 +29,7 @@ public class TitleState extends BasicGameState
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException
     {
         this.sbg = sbg;
-        about = new Button(Main.getScreenWidth()/3, Main.getScreenHeight()/2, Main.getScreenWidth()/3, Main.getScreenHeight()/10, "About", Color.black);
+        about = new Button(Main.getScreenWidth()/3, Main.getScreenHeight()/2, Main.getScreenWidth()/3, Main.getScreenHeight()/10, "About", Color.orange);
         input = new Input(Main.getScreenHeight());
         // This code happens when you enter a game state for the *first time.*
         //gc.setShowFPS(Main.debug);
@@ -44,6 +44,7 @@ public class TitleState extends BasicGameState
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException
     {
         about.render(g);
+        g.setBackground(Color.blue);
         // This code renders shapes and images every frame.
     }
 
@@ -64,6 +65,10 @@ public class TitleState extends BasicGameState
 
     public void mousePressed(int button, int x, int y)
     {
+        if(about.clicked())
+        {
+            sbg.enterState(Main.GAME_ID);
+        }
         // This code happens every time the user presses the mouse
     }
 
