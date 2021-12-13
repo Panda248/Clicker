@@ -8,6 +8,9 @@ import org.newdawn.slick.SlickException;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
+import java.sql.Array;
+import java.util.ArrayList;
+
 public class GameState extends BasicGameState
 {	
 	private int id;
@@ -16,7 +19,12 @@ public class GameState extends BasicGameState
 	{
 		this.id = id;
 	}
-	
+	private int time;
+	private int timeInSec;
+	private Player plr;
+	private ArrayList  <Goose> Geese;
+	private int geeseAmt;
+	private boolean canClick;
 	public int getID() 
 	{
 		return id;		
@@ -24,28 +32,75 @@ public class GameState extends BasicGameState
 	
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException 
 	{
+		geeseAmt = 10;
 		this.sbg = sbg;
 		// This code happens when you enter a game state for the *first time.*
-		gc.setShowFPS(true);
+		time = 60*30;
+		timeInSec = 30;
+		plr = new Player();
+		Geese = new ArrayList<Goose>();
+		for(int i = 0; i < geeseAmt; i++)
+		{
+			Geese.add(new Goose((float)Math.random()*Main.getScreenWidth(),
+								 Main.getScreenHeight(),
+								(float)Math.random()*5 - 2.5f,
+								(float)Math.random()*5,
+								(float)Math.random()*2 + 1));
+		}
+		canClick = true;
 	}
 
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException
 	{	
 		// This is updates your game's logic every frame.  NO DRAWING.
+		time--;
+		if(time%60 == 0)
+		{
+			timeInSec = time/60;
+		}
+		if(time < 0)
+		{
+			sbg.enterState(Main.END_ID);
+		}
+		for(Goose i: Geese)
+		{
+			i.update();
+		}
 	}
 
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException 
 	{
+		g.drawString(String.valueOf(timeInSec), 0,0);
+		for(Goose i: Geese)
+		{
+			i.render(g);
+		}
 		// This code renders shapes and images every frame.
 	}
 	
 	public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException 
 	{
-		// This code happens when you enter a gameState.  
+		// This code happens when you enter a gameState.
+		time = 60*30;
+		timeInSec = 30;
+		for(int i = 0; i < geeseAmt; i++)
+		{
+			Geese.add(new Goose((float)Math.random()*Main.getScreenWidth(),
+					(float)Math.random()*Main.getScreenHeight() + (Main.getScreenHeight()*0.8f),
+					(float)Math.random()*10 - 20,
+					(float)Math.random()*10,
+					(float)Math.random()*2 + 1));
+		}
+		plr = new Player();
+		canClick = true;
 	}
 
 	public void leave(GameContainer gc, StateBasedGame sbg) 
 	{
+		for(int i = Geese.size() - 1; i > 0; i--)
+		{
+			Geese.remove(Geese.get(i));
+		}
 		// This code happens when you leave a gameState. 
 	}
 
@@ -56,7 +111,30 @@ public class GameState extends BasicGameState
 	
 	public void mousePressed(int button, int x, int y)
 	{
+		if(button == Input.MOUSE_LEFT_BUTTON)
+		{
+			if (canClick && plr.getAmmo() > 0) {
+				System.out.println("HALLOOOO");
+				plr.shoot();
+				for (int i = Geese.size() - 1; i >= 0; i--) {
+					System.out.println("entered loop");
+					if (Geese.get(i).isShot(x, y)) {
+						System.out.println("shot");
+						Geese.remove(i);
+						break;
+					}
+				}
+			}
+		}
+
 		// This code happens every time the user presses the mouse
+	}
+	public void mouseReleased(int button, int x, int y)
+	{
+		if(!canClick)
+		{
+			canClick = true;
+		}
 	}
 	
 	

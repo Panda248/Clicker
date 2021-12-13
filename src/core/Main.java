@@ -12,9 +12,9 @@ public class Main extends StateBasedGame
 	private static AppGameContainer appgc;
 	public static boolean debug;
 
-	private static final int TITLE_ID = 0;
+	public static final int TITLE_ID = 0;
 	public static final int GAME_ID  = 1;
-	private static final int END_ID = 2;
+	public static final int END_ID = 2;
     
     private BasicGameState title;
 	private BasicGameState game;
