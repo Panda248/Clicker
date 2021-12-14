@@ -36,6 +36,8 @@ public class EndState extends BasicGameState
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException
     {
+        g.setBackground(Color.black);
+        g.drawString(String.valueOf(GameState.score), Main.getScreenWidth()/2f, Main.getScreenHeight()/2f);
         // This code renders shapes and images every frame.
     }
 

@@ -19,6 +19,7 @@ public class GameState extends BasicGameState
 	{
 		this.id = id;
 	}
+	public static int score;
 	private int time;
 	private int timeInSec;
 	private Player plr;
@@ -32,6 +33,7 @@ public class GameState extends BasicGameState
 	
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException 
 	{
+		score = 0;
 		geeseAmt = 10;
 		this.sbg = sbg;
 		// This code happens when you enter a game state for the *first time.*
@@ -42,9 +44,9 @@ public class GameState extends BasicGameState
 		for(int i = 0; i < geeseAmt; i++)
 		{
 			Geese.add(new Goose((float)Math.random()*Main.getScreenWidth(),
-								 Main.getScreenHeight(),
-								(float)Math.random()*5 - 2.5f,
-								(float)Math.random()*5,
+								 Main.getScreenHeight() - 10,
+								(float)Math.random()*2.5f - 2.5f,
+								(float)Math.random()*4,
 								(float)Math.random()*2 + 1));
 		}
 		canClick = true;
@@ -53,24 +55,42 @@ public class GameState extends BasicGameState
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException
 	{	
 		// This is updates your game's logic every frame.  NO DRAWING.
-		time--;
-		if(time%60 == 0)
+		if(Geese.size()>0)
 		{
-			timeInSec = time/60;
+			time--;
+			if(time%60 == 0)
+			{
+				timeInSec = time/60;
+			}
+			for(Goose i: Geese)
+			{
+				i.update();
+			}
+		}
+		else
+		{
+
+			for(int i = 0; i < 10; i++)
+			{
+				time--;
+				if(time%60 == 0)
+				{
+					timeInSec = time/60;
+					score++;
+				}
+			}
+
 		}
 		if(time < 0)
 		{
 			sbg.enterState(Main.END_ID);
-		}
-		for(Goose i: Geese)
-		{
-			i.update();
 		}
 	}
 
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException 
 	{
 		g.drawString(String.valueOf(timeInSec), 0,0);
+		g.drawString(String.valueOf(plr.getAmmo()), 0, Main.getScreenHeight()*0.9f);
 		for(Goose i: Geese)
 		{
 			i.render(g);
@@ -114,12 +134,11 @@ public class GameState extends BasicGameState
 		if(button == Input.MOUSE_LEFT_BUTTON)
 		{
 			if (canClick && plr.getAmmo() > 0) {
-				System.out.println("HALLOOOO");
+
 				plr.shoot();
 				for (int i = Geese.size() - 1; i >= 0; i--) {
-					System.out.println("entered loop");
 					if (Geese.get(i).isShot(x, y)) {
-						System.out.println("shot");
+						score++;
 						Geese.remove(i);
 						break;
 					}

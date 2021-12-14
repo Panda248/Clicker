@@ -15,7 +15,7 @@ public class Player {
     }
     public void shoot()
     {
-        return;
+        ammo--;
     }
     public void render(Graphics g)
     {

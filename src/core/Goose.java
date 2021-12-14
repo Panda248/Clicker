@@ -25,12 +25,12 @@ public class Goose {
     {
         this.x+=this.xSpeed;
         this.y-=this.ySpeed;
-        if(this.y - this.height > Main.getScreenHeight() || (this.x + width < 0 || this.x > Main.getScreenWidth()))
+        if(this.y + this.height < 0 || (this.x + width < 0 || this.x > Main.getScreenWidth()))
         {
-            this.xSpeed = (float)Math.random()*5 - 2.5f;
-            this.ySpeed = (float)Math.random()*5;
-            this.y = Main.getScreenHeight();
-            this.x = (float)Math.random()*Main.getScreenWidth();
+            this.xSpeed = (float)Math.random()*2.5f - 2.5f;
+            this.ySpeed = (float)Math.random()*4;
+            this.y = Main.getScreenHeight() - this.height;
+            this.x = (float)Math.random()*(Main.getScreenWidth()-width)+width;
         }
 
     }
