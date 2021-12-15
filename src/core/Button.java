@@ -3,6 +3,7 @@ package core;
 import org.newdawn.slick.Color;
 import org.newdawn.slick.Graphics;
 import org.newdawn.slick.Input;
+import org.newdawn.slick.TrueTypeFont;
 
 public class Button {
     private float x;
@@ -33,6 +34,7 @@ public class Button {
     }
     public void render(Graphics g)
     {
+        g.setFont(new TrueTypeFont(Main.font, false));
         if(over)
         {
             g.setColor(color.darker());

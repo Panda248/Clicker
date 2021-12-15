@@ -27,8 +27,8 @@ public class Goose {
         this.y-=this.ySpeed;
         if(this.y + this.height < 0 || (this.x + width < 0 || this.x > Main.getScreenWidth()))
         {
-            this.xSpeed = (float)Math.random()*2.5f - 2.5f;
-            this.ySpeed = (float)Math.random()*4;
+            this.xSpeed = (float)(Math.random()*5 - 5);
+            this.ySpeed = (float)(Math.random()*12 + 4);
             this.y = Main.getScreenHeight() - this.height;
             this.x = (float)Math.random()*(Main.getScreenWidth()-width)+width;
         }

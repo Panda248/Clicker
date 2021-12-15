@@ -16,7 +16,7 @@ public class EndState extends BasicGameState
     {
         this.id = id;
     }
-
+    private Cat cat;
     public int getID()
     {
         return id;
@@ -26,18 +26,20 @@ public class EndState extends BasicGameState
     {
         this.sbg = sbg;
         // This code happens when you enter a game state for the *first time.*
-        gc.setShowFPS(true);
+        this.cat = new Cat(GameState.score);
     }
 
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException
     {
         // This is updates your game's logic every frame.  NO DRAWING.
+        cat.update();
     }
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException
     {
         g.setBackground(Color.black);
         g.drawString(String.valueOf(GameState.score), Main.getScreenWidth()/2f, Main.getScreenHeight()/2f);
+        cat.render(g);
         // This code renders shapes and images every frame.
     }
 

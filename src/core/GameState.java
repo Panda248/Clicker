@@ -45,8 +45,8 @@ public class GameState extends BasicGameState
 		{
 			Geese.add(new Goose((float)Math.random()*Main.getScreenWidth(),
 								 Main.getScreenHeight() - 10,
-								(float)Math.random()*2.5f - 2.5f,
-								(float)Math.random()*4,
+								(float)(Math.random()*5 - 5),
+								(float)(Math.random()*12+4),
 								(float)Math.random()*2 + 1));
 		}
 		canClick = true;

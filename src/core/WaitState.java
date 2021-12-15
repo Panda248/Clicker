@@ -4,15 +4,14 @@ import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
-public class TitleState extends BasicGameState
+public class WaitState extends BasicGameState
 {
     private int id;
     private StateBasedGame sbg;
-    private Button about;
-    private Button start;
-    private Button exit;
+    private int timer;
+    private int timerInSec;
     private Input input;
-    public TitleState(int id)
+    public WaitState(int id)
     {
         this.id = id;
     }
@@ -25,29 +24,37 @@ public class TitleState extends BasicGameState
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException
     {
         this.sbg = sbg;
-        about = new Button(Main.getScreenWidth()/3, Main.getScreenHeight()/2, Main.getScreenWidth()/3, Main.getScreenHeight()/10, "Start", Color.orange);
-        input = new Input(Main.getScreenHeight());
+        timer = 60*3;
+        timerInSec = 3;
         // This code happens when you enter a game state for the *first time.*
-        gc.setShowFPS(false);
     }
 
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException
     {
-        about.update(input);
+        timer--;
+        if(timer < 0)
+        {
+            sbg.enterState(Main.GAME_ID);
+        }
         // This is updates your game's logic every frame.  NO DRAWING.
     }
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException
     {
-
-        g.setBackground(Color.blue);
-        about.render(g);
-
+        g.setFont(new TrueTypeFont(Main.font, false));
+        g.scale(2,2);
+        if(timer%60 == 0)
+        {
+            timerInSec = timer/60;
+        }
+        g.drawString(String.valueOf(timerInSec), Main.getScreenWidth()/4, Main.getScreenHeight()/4);
         // This code renders shapes and images every frame.
+        g.scale(1,1);
     }
 
     public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException
     {
+        timer = 60*3;
         // This code happens when you enter a gameState.
     }
 
@@ -63,10 +70,6 @@ public class TitleState extends BasicGameState
 
     public void mousePressed(int button, int x, int y)
     {
-        if(about.clicked())
-        {
-            sbg.enterState(Main.WAIT_ID);
-        }
         // This code happens every time the user presses the mouse
     }
 
