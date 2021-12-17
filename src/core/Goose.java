@@ -1,6 +1,7 @@
 package core;
 
 import org.newdawn.slick.Graphics;
+import org.newdawn.slick.Image;
 
 public class Goose {
     private float x;
@@ -10,6 +11,24 @@ public class Goose {
     private float width;
     private float height;
     private boolean alive;
+    private Image frame;
+    private int frames;
+    private int time;
+    private int timePerFrame;
+
+    public void kill()
+    {
+        this.alive = false;
+    }
+    public boolean dead()
+    {
+        return !alive;
+    }
+    public boolean outOfBounds()
+    {
+        return (this.x < 0 || this.x > Main.getScreenWidth()) || (this.y < 0 || this.y > Main.getScreenHeight());
+    }
+
 
     public Goose(float x, float y, float xSpeed, float ySpeed, float size){
         this.x = x;
@@ -23,15 +42,23 @@ public class Goose {
 
     public void update()
     {
-        this.x+=this.xSpeed;
-        this.y-=this.ySpeed;
-        if(this.y + this.height < 0 || (this.x + width < 0 || this.x > Main.getScreenWidth()))
+        if(!alive)
         {
-            this.xSpeed = (float)(Math.random()*5 - 5);
-            this.ySpeed = (float)(Math.random()*12 + 4);
-            this.y = Main.getScreenHeight() - this.height;
-            this.x = (float)Math.random()*(Main.getScreenWidth()-width)+width;
+            this.y += 10;
         }
+        else
+        {
+            this.x+=this.xSpeed;
+            this.y-=this.ySpeed;
+            if(outOfBounds())
+            {
+                this.xSpeed = (float)(Math.random()*5 - 5);
+                this.ySpeed = (float)(Math.random()*12 + 4);
+                this.y = Main.getScreenHeight() - this.height;
+                this.x = (float)Math.random()*(Main.getScreenWidth()-width)+width;
+            }
+        }
+
 
     }
     public boolean isShot(int x, int y)

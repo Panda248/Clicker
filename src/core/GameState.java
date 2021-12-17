@@ -1,10 +1,6 @@
 package core;
 
-import org.newdawn.slick.Color;
-import org.newdawn.slick.GameContainer;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Input;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
 import org.newdawn.slick.state.BasicGameState;
 import org.newdawn.slick.state.StateBasedGame;
 
@@ -26,6 +22,7 @@ public class GameState extends BasicGameState
 	private ArrayList  <Goose> Geese;
 	private int geeseAmt;
 	private boolean canClick;
+	public static Input input;
 	public int getID() 
 	{
 		return id;		
@@ -33,6 +30,7 @@ public class GameState extends BasicGameState
 	
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException 
 	{
+		input = new Input(Main.getScreenHeight());
 		score = 0;
 		geeseAmt = 10;
 		this.sbg = sbg;
@@ -40,16 +38,7 @@ public class GameState extends BasicGameState
 		time = 60*30;
 		timeInSec = 30;
 		plr = new Player();
-		Geese = new ArrayList<Goose>();
-		for(int i = 0; i < geeseAmt; i++)
-		{
-			Geese.add(new Goose((float)Math.random()*Main.getScreenWidth(),
-								 Main.getScreenHeight() - 10,
-								(float)(Math.random()*5 - 5),
-								(float)(Math.random()*12+4),
-								(float)Math.random()*2 + 1));
-		}
-		canClick = true;
+		Geese = new ArrayList <Goose>();
 	}
 
 	public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException
@@ -64,13 +53,21 @@ public class GameState extends BasicGameState
 			}
 			for(Goose i: Geese)
 			{
-				i.update();
+				if(i.outOfBounds() && i.dead())
+				{
+					Geese.remove(i);
+					break;
+				}
+				else
+				{
+					i.update();
+				}
 			}
 		}
 		else
 		{
 
-			for(int i = 0; i < 10; i++)
+			for(int i = 0; i < 20; i++)
 			{
 				time--;
 				if(time%60 == 0)
@@ -89,6 +86,7 @@ public class GameState extends BasicGameState
 
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException 
 	{
+		g.setFont(new TrueTypeFont(Main.font, false));
 		g.drawString(String.valueOf(timeInSec), 0,0);
 		g.drawString(String.valueOf(plr.getAmmo()), 0, Main.getScreenHeight()*0.9f);
 		for(Goose i: Geese)
@@ -101,6 +99,7 @@ public class GameState extends BasicGameState
 	public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException 
 	{
 		// This code happens when you enter a gameState.
+		gc.setMouseCursor(plr.crosshair, 21, 21);
 		time = 60*30;
 		timeInSec = 30;
 		for(int i = 0; i < geeseAmt; i++)
@@ -115,12 +114,13 @@ public class GameState extends BasicGameState
 		canClick = true;
 	}
 
-	public void leave(GameContainer gc, StateBasedGame sbg) 
+	public void leave(GameContainer gc, StateBasedGame sbg) throws SlickException
 	{
 		for(int i = Geese.size() - 1; i > 0; i--)
 		{
 			Geese.remove(Geese.get(i));
 		}
+		gc.setMouseCursor("res/imgs/cursor.png", 10, 0);
 		// This code happens when you leave a gameState. 
 	}
 
@@ -139,7 +139,7 @@ public class GameState extends BasicGameState
 				for (int i = Geese.size() - 1; i >= 0; i--) {
 					if (Geese.get(i).isShot(x, y)) {
 						score++;
-						Geese.remove(i);
+						Geese.get(i).kill();
 						break;
 					}
 				}

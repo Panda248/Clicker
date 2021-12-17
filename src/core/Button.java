@@ -8,16 +8,20 @@ import org.newdawn.slick.TrueTypeFont;
 public class Button {
     private float x;
     private float y;
+    private float xDisplace;
+    private float yDisplace;
     private float width;
     private float height;
     private String text;
     private Color color;
     private boolean over;
 
-    public Button(float x, float y, float width, float height, String text, Color color)
+    public Button(float x, float y, float width, float height, String text, Color color, float xDisplace, float yDisplace)
     {
         this.x = x;
         this.y = y;
+        this.xDisplace = xDisplace;
+        this.yDisplace = yDisplace;
         this.width = width;
         this.height = height;
         this.text = text;
@@ -34,7 +38,7 @@ public class Button {
     }
     public void render(Graphics g)
     {
-        g.setFont(new TrueTypeFont(Main.font, false));
+
         if(over)
         {
             g.setColor(color.darker());
@@ -46,7 +50,7 @@ public class Button {
         g.fillRect(this.x, this.y, this.width, this.height);
         g.drawRect(this.x, this.y, this.width, this.height);
         g.setColor(Color.white);
-        g.drawString(this.text, this.x + width*0.4f, this.y + this.height/3);
+        g.drawString(this.text, this.x + this.width*this.xDisplace, this.y + this.height*this.yDisplace);
     }
 
 

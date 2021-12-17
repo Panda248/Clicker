@@ -24,8 +24,22 @@ public class TitleState extends BasicGameState
 
     public void init(GameContainer gc, StateBasedGame sbg) throws SlickException
     {
+        gc.setMouseCursor("res/imgs/cursor.png", 10, 0);
         this.sbg = sbg;
-        about = new Button(Main.getScreenWidth()/3, Main.getScreenHeight()/2, Main.getScreenWidth()/3, Main.getScreenHeight()/10, "Start", Color.orange);
+        start = new Button(Main.getScreenWidth()*0.4f,
+                            Main.getScreenHeight()/2f,
+                            Main.getScreenWidth()/5f,
+                            Main.getScreenHeight()/10f,
+                            "Start", new Color(0,225, 0),
+                            0.3f,
+                            0.4f);
+        exit = new Button(Main.getScreenWidth()*0.4f,
+                        Main.getScreenHeight()*8,
+                        Main.getScreenWidth()/5f,
+                        Main.getScreenHeight()/10f,
+                        "Start", new Color(0,225, 0),
+                        0.3f,
+                        0.4f);
         input = new Input(Main.getScreenHeight());
         // This code happens when you enter a game state for the *first time.*
         gc.setShowFPS(false);
@@ -33,15 +47,18 @@ public class TitleState extends BasicGameState
 
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException
     {
-        about.update(input);
+        start.update(input);
+        exit.update(input);
         // This is updates your game's logic every frame.  NO DRAWING.
     }
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException
     {
-
+        g.setFont(new TrueTypeFont(Main.font, false));
+        g.drawString("Goose Chase", Main.getScreenWidth()*0.42f, Main.getScreenHeight()*0.4f);
         g.setBackground(Color.blue);
-        about.render(g);
+        start.render(g);
+        exit.render(g);
 
         // This code renders shapes and images every frame.
     }
@@ -63,9 +80,13 @@ public class TitleState extends BasicGameState
 
     public void mousePressed(int button, int x, int y)
     {
-        if(about.clicked())
+        if(start.clicked())
         {
             sbg.enterState(Main.WAIT_ID);
+        }
+        else if(exit.clicked())
+        {
+            System.exit(0);
         }
         // This code happens every time the user presses the mouse
     }

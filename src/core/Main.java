@@ -19,6 +19,7 @@ public class Main extends StateBasedGame
 	private static AppGameContainer appgc;
 	public static boolean debug;
 	public static Font font;
+	public static Image background;
 
 	public static final int TITLE_ID = 0;
 	public static final int GAME_ID  = 1;
@@ -61,7 +62,7 @@ public class Main extends StateBasedGame
 	}
 
 	public static void main(String[] args) throws IOException, FontFormatException {
-		font = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream("res/fonts/PressStart.ttf")).deriveFont(Font.PLAIN, 60);
+		font = Font.createFont(Font.TRUETYPE_FONT, new FileInputStream("res/fonts/PressStart.ttf")).deriveFont(Font.PLAIN, 30);
 		debug = false;
 		try 
 		{

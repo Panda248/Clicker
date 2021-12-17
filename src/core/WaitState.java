@@ -42,14 +42,12 @@ public class WaitState extends BasicGameState
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException
     {
         g.setFont(new TrueTypeFont(Main.font, false));
-        g.scale(2,2);
-        if(timer%60 == 0)
+        if(timer%60 == 0 && timer != 0)
         {
             timerInSec = timer/60;
         }
-        g.drawString(String.valueOf(timerInSec), Main.getScreenWidth()/4, Main.getScreenHeight()/4);
+        g.drawString(String.valueOf(timerInSec), Main.getScreenWidth()/2, Main.getScreenHeight()/2);
         // This code renders shapes and images every frame.
-        g.scale(1,1);
     }
 
     public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException

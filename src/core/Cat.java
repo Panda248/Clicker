@@ -8,7 +8,7 @@ public class Cat {
     private float size;
     private int anim;
     private int timer;
-
+    public boolean done;
     public Cat(int score)
     {
         this.size = 100;
@@ -16,6 +16,7 @@ public class Cat {
         this.y = Main.getScreenHeight();
         this.anim = score;
         this.timer = 0;
+        this.done = false;
     }
 
     public void update()
@@ -23,7 +24,10 @@ public class Cat {
         if(this.y > Main.getScreenHeight()/2 && timer == 0)
         {
             this.y-=4;
-
+            if(this.y > Main.getScreenHeight())
+            {
+                done = true;
+            }
         }
         else
         {

@@ -1,10 +1,6 @@
 package core;
 
-        import org.newdawn.slick.Color;
-        import org.newdawn.slick.GameContainer;
-        import org.newdawn.slick.Graphics;
-        import org.newdawn.slick.Input;
-        import org.newdawn.slick.SlickException;
+        import org.newdawn.slick.*;
         import org.newdawn.slick.state.BasicGameState;
         import org.newdawn.slick.state.StateBasedGame;
 
@@ -26,17 +22,21 @@ public class EndState extends BasicGameState
     {
         this.sbg = sbg;
         // This code happens when you enter a game state for the *first time.*
-        this.cat = new Cat(GameState.score);
     }
 
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException
     {
         // This is updates your game's logic every frame.  NO DRAWING.
         cat.update();
+        if(cat.done)
+        {
+            sbg.enterState(Main.TITLE_ID);
+        }
     }
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException
     {
+        g.setFont(new TrueTypeFont(Main.font, false));
         g.setBackground(Color.black);
         g.drawString(String.valueOf(GameState.score), Main.getScreenWidth()/2f, Main.getScreenHeight()/2f);
         cat.render(g);
@@ -46,6 +46,7 @@ public class EndState extends BasicGameState
     public void enter(GameContainer gc, StateBasedGame sbg) throws SlickException
     {
         // This code happens when you enter a gameState.
+        this.cat = new Cat(GameState.score);
     }
 
     public void leave(GameContainer gc, StateBasedGame sbg)
