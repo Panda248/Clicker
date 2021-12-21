@@ -10,6 +10,9 @@ import java.util.ArrayList;
 public class GameState extends BasicGameState
 {	
 	private int id;
+	public static SpriteSheet gooseFly;
+	public static SpriteSheet gooseDie;
+	private Image grass;
 	private StateBasedGame sbg;
 	public GameState(int id)
 	{
@@ -30,6 +33,9 @@ public class GameState extends BasicGameState
 	
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException 
 	{
+		gooseFly = new SpriteSheet(new Image("res/imgs/fly.png"), 100, 100);
+		gooseDie = new SpriteSheet(new Image("res/imgs/die.png"), 100, 100);
+		grass = new Image("res/imgs/grass.png");
 		input = new Input(Main.getScreenHeight());
 		score = 0;
 		geeseAmt = 10;
@@ -93,6 +99,8 @@ public class GameState extends BasicGameState
 		{
 			i.render(g);
 		}
+		g.drawImage(grass, 0, Main.getScreenHeight()-150);
+		plr.render(g);
 		// This code renders shapes and images every frame.
 	}
 	
@@ -107,8 +115,7 @@ public class GameState extends BasicGameState
 			Geese.add(new Goose((float)Math.random()*Main.getScreenWidth(),
 					(float)Math.random()*Main.getScreenHeight() + (Main.getScreenHeight()*0.8f),
 					(float)Math.random()*10 - 20,
-					(float)Math.random()*10,
-					(float)Math.random()*2 + 1));
+					(float)Math.random()*10));
 		}
 		plr = new Player();
 		canClick = true;
@@ -135,7 +142,7 @@ public class GameState extends BasicGameState
 		{
 			if (canClick && plr.getAmmo() > 0) {
 
-				plr.shoot();
+				plr.shoot(input);
 				for (int i = Geese.size() - 1; i >= 0; i--) {
 					if (Geese.get(i).isShot(x, y)) {
 						score++;

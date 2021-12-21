@@ -44,6 +44,10 @@ public class Cat {
     public void render(Graphics g)
     {
         g.drawRect(this.x, this.y, this. size, this.size);
+        if(timer > 0)
+        {
+            g.drawString(String.valueOf(GameState.score), Main.getScreenWidth()*0.49f, Main.getScreenHeight()/2f);
+        }
     }
 
 }

@@ -34,11 +34,11 @@ public class TitleState extends BasicGameState
                             0.3f,
                             0.4f);
         exit = new Button(Main.getScreenWidth()*0.4f,
-                        Main.getScreenHeight()*8,
+                        Main.getScreenHeight()*.7f,
                         Main.getScreenWidth()/5f,
                         Main.getScreenHeight()/10f,
-                        "Start", new Color(0,225, 0),
-                        0.3f,
+                        "Exit", new Color(225,0, 0),
+                        0.33f,
                         0.4f);
         input = new Input(Main.getScreenHeight());
         // This code happens when you enter a game state for the *first time.*

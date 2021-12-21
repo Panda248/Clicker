@@ -1,15 +1,18 @@
 package core;
 
-import org.newdawn.slick.Game;
-import org.newdawn.slick.Graphics;
-import org.newdawn.slick.Image;
-import org.newdawn.slick.SlickException;
+import org.newdawn.slick.*;
 
 public class Player {
     private int ammo;
     public Image crosshair;
+    private Image gunshot;
+    private float x;
+    private float y;
+    private int timer;
     public Player() throws SlickException
     {
+        timer = 100;
+        gunshot = new Image("res/imgs/gunshot.png");
         crosshair = new Image("res/imgs/crosshair.png");
         ammo = 100;
     }
@@ -17,12 +20,19 @@ public class Player {
     {
         return ammo;
     }
-    public void shoot()
+    public void shoot(Input input)
     {
+        timer = 0;
         ammo--;
+        x = input.getMouseX();
+        y = input.getMouseY();
     }
     public void render(Graphics g)
     {
-        g.drawString(String.valueOf(ammo), Main.getScreenWidth()-100, 50);
+        timer++;
+        if(timer < 10)
+        {
+            g.drawImage(gunshot, this.x-20, this.y-20);
+        }
     }
 }

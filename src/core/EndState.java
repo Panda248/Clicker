@@ -38,7 +38,6 @@ public class EndState extends BasicGameState
     {
         g.setFont(new TrueTypeFont(Main.font, false));
         g.setBackground(Color.black);
-        g.drawString(String.valueOf(GameState.score), Main.getScreenWidth()/2f, Main.getScreenHeight()/2f);
         cat.render(g);
         // This code renders shapes and images every frame.
     }
