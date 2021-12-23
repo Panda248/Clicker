@@ -35,7 +35,7 @@ public class Cat {
     public void update()
     {
 
-        if(this.y + size > Main.getScreenHeight() - 275  && timer == 0)
+        if(this.y + size > Main.getScreenHeight() - 255  && timer == 0)
         {
             this.y-=4;
 
