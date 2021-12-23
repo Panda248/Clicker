@@ -11,7 +11,10 @@ public class TitleState extends BasicGameState
     private Button about;
     private Button start;
     private Button exit;
-    private Input input;
+    public static Input input;
+    private Image bg;
+    private float x1;
+    private float x2;
     public TitleState(int id)
     {
         this.id = id;
@@ -43,17 +46,32 @@ public class TitleState extends BasicGameState
         input = new Input(Main.getScreenHeight());
         // This code happens when you enter a game state for the *first time.*
         gc.setShowFPS(false);
+        x1 = 0;
+        x2 = Main.getScreenWidth();
+        bg = new Image("res/imgs/titleBackground.png");
     }
 
     public void update(GameContainer gc, StateBasedGame sbg, int delta) throws SlickException
     {
         start.update(input);
         exit.update(input);
+        x1--;
+        x2--;
+        if(x1 + bg.getWidth() < 0)
+        {
+            x1 = Main.getScreenWidth();
+        }
+        if(x2 + bg.getWidth() < 0)
+        {
+            x1 = Main.getScreenWidth();
+        }
         // This is updates your game's logic every frame.  NO DRAWING.
     }
 
     public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException
     {
+        g.drawImage(bg, x1, 0);
+        g.drawImage(bg, x2, 0);
         g.setFont(new TrueTypeFont(Main.font, false));
         g.drawString("Goose Chase", Main.getScreenWidth()*0.42f, Main.getScreenHeight()*0.4f);
         g.setBackground(Color.blue);

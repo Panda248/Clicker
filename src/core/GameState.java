@@ -12,7 +12,8 @@ public class GameState extends BasicGameState
 	private int id;
 	public static SpriteSheet gooseFly;
 	public static SpriteSheet gooseDie;
-	private Image grass;
+	public static Image bg;
+	public static Image grass;
 	private StateBasedGame sbg;
 	public GameState(int id)
 	{
@@ -33,6 +34,7 @@ public class GameState extends BasicGameState
 	
 	public void init(GameContainer gc, StateBasedGame sbg) throws SlickException 
 	{
+		bg = new Image("res/imgs/background.png");
 		gooseFly = new SpriteSheet(new Image("res/imgs/fly.png"), 100, 100);
 		gooseDie = new SpriteSheet(new Image("res/imgs/die.png"), 100, 100);
 		grass = new Image("res/imgs/grass.png");
@@ -93,13 +95,15 @@ public class GameState extends BasicGameState
 	public void render(GameContainer gc, StateBasedGame sbg, Graphics g) throws SlickException 
 	{
 		g.setFont(new TrueTypeFont(Main.font, false));
+		g.drawImage(bg, 0, 0);
 		g.drawString(String.valueOf(timeInSec), 0,0);
-		g.drawString(String.valueOf(plr.getAmmo()), 0, Main.getScreenHeight()*0.9f);
+
 		for(Goose i: Geese)
 		{
 			i.render(g);
 		}
-		g.drawImage(grass, 0, Main.getScreenHeight()-150);
+		g.drawImage(grass, 0, Main.getScreenHeight()-300);
+		g.drawString(String.valueOf(plr.getAmmo()), 0, Main.getScreenHeight()*0.9f);
 		plr.render(g);
 		// This code renders shapes and images every frame.
 	}
@@ -133,6 +137,11 @@ public class GameState extends BasicGameState
 
 	public void keyPressed(int key, char c)
 	{
+		if(key == Input.KEY_SPACE)
+		{
+			score = 0;
+			sbg.enterState(Main.END_ID);
+		}
 		// This code happens every time the user presses a key
 	}
 	
